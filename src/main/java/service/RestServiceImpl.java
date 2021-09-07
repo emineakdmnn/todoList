@@ -28,21 +28,8 @@ import java.util.stream.Collectors;
 @Api(value = "/", tags = "TodoAPI", description = "API to add and retrieve data from database")
 @Path("/")
 @SwaggerDefinition(
-        info = @Info(
-                description = "Another TodoList application with Spring Boot and Swagger",
-                version = "V1.0",
-                title = "TodoList Application",
-                contact = @Contact(
-                        name = "Alex Bondar",
-                        email = "desertalex@icloud.com",
-                        url = "https://github.com/abondar24"
 
-                ),
-                license = @License(
-                        name = "Apache 2.0",
-                        url = "http://www.apache.org/licenses/LICENSE-2.0"
-                )
-        ),
+       
         consumes = {"application/json"},
         produces = {"application/json"},
         schemes = {SwaggerDefinition.Scheme.HTTP, SwaggerDefinition.Scheme.HTTPS},

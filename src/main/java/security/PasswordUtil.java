@@ -33,12 +33,12 @@ public class PasswordUtil {
 
     private static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
 
-    // These constants may be changed without breaking existing hashes.
+
     private static final int SALT_BYTE_SIZE = 24;
     private static final int HASH_BYTE_SIZE = 18;
     private static final int PBKDF2_ITERATIONS = 64000;
 
-    // These constants define the encoding and may not be changed.
+  
     private static final int HASH_SECTIONS = 5;
     private static final int HASH_ALGORITHM_INDEX = 0;
     private static final int ITERATION_INDEX = 1;
@@ -53,16 +53,16 @@ public class PasswordUtil {
 
     private static String createHash(char[] password)
             throws CannotPerformOperationException {
-        // Generate a random salt
+       
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_BYTE_SIZE];
         random.nextBytes(salt);
 
-        // Hash the password
+       
         byte[] hash = pbkdf2(password, salt, PBKDF2_ITERATIONS, HASH_BYTE_SIZE);
         int hashSize = hash.length;
 
-        // format: algorithm:iterations:hashSize:salt:hash
+   
         return "sha1:" +
                 PBKDF2_ITERATIONS +
                 ":" + hashSize +
@@ -79,7 +79,7 @@ public class PasswordUtil {
 
     private static boolean verifyPassword(char[] password, String correctHash)
             throws CannotPerformOperationException, InvalidHashException {
-        // Decode the hash into its parameters
+       
         String[] params = correctHash.split(":");
         if (params.length != HASH_SECTIONS) {
             throw new InvalidHashException(
@@ -87,7 +87,7 @@ public class PasswordUtil {
             );
         }
 
-        // Currently, Java only supports SHA1.
+      
         if (!params[HASH_ALGORITHM_INDEX].equals("sha1")) {
             throw new CannotPerformOperationException(
                     "Unsupported hash type."
@@ -148,11 +148,9 @@ public class PasswordUtil {
             );
         }
 
-        // Compute the hash of the provided password, using the same salt,
-        // iteration count, and hash length
+       
         byte[] testHash = pbkdf2(password, salt, iterations, hash.length);
-        // Compare the hashes in constant time. The password is correct if
-        // both hashes match.
+       
         return slowEquals(hash, testHash);
     }
 
